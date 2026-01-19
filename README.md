@@ -13,6 +13,29 @@ Switch your monitor's input source via **DDC/CI** commands directly from Raycast
 
 ## Prerequisites
 
+### Install the extension
+- Install `asdf` if on macOS or
+- Install `vfox` if on Windows
+- Optionally, install `direnv` (if developing)
+
+Then install the dependencies with `asdf install`/`vfox install`. After that:
+- **Run the extension in dev mode:** `npm run dev`
+- **Install the extension locally:** `npm run build`
+
+
+#### Local development
+If you wish to contribute, ensure `direnv` is installed and load the layout:
+```bash
+direnv allow
+```
+
+Then get your Raycast org token:
+```bash
+ray token
+```
+
+And set it on a `.env.local` file (copy from `.env.local.template`).
+
 ### macOS (Apple Silicon only)
 
 **m1ddc** is required. Install via Homebrew:
@@ -38,11 +61,8 @@ m1ddc get input
 2. Extract `ControlMyMonitor.exe` to a permanent location (e.g., `C:\Tools\ControlMyMonitor.exe`)
 3. Note the full path — you'll need it for extension preferences
 
-Verify it works:
-
-```powershell
-.\ControlMyMonitor.exe /smonitors
-```
+Verify it works by running the executable, and wait for DDC/CI query results. Note down the **possible values for the operation with VPC code 60.**
+Select **Options > Put Icon on Tray** and then you can close it. The app needs to be running for the commands to execute successfully.
 
 ---
 

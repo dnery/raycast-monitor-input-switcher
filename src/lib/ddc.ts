@@ -11,7 +11,8 @@
  */
 
 import { execSync, ExecSyncOptions } from "node:child_process";
-import { detectPlatform, validatePrerequisites } from "./platform";
+import { SupportedPlatform } from "./platform";
+import { GenericSuccess, ToastResult } from "./toast";
 
 /** VCP code for Input Source Select (DDC/CI standard) */
 const VCP_INPUT_SOURCE = 60;
@@ -45,36 +46,42 @@ export interface InputDiscovery {
  * @param monitorId - Monitor identifier for ControlMyMonitor (Windows only, default: "Primary")
  */
 export function switchInput(
+  platformOs: SupportedPlatform,
   inputValue: number,
-  controlMyMonitorPath?: string,
-  monitorId: string = "Primary"
-): SwitchResult {
+  monitorId: string,
+  exePath: string,
+): ToastResult {
   // Validate prerequisites first
-  const prereqError = validatePrerequisites(controlMyMonitorPath);
-  if (prereqError) {
-    return { success: false, message: prereqError };
+  // const platform = detectPlatform();
+  // const platformValidation = validateHostPlatform(platform);
+  // if (platformValidation.status == "failure") {
+  //   return platformValidation;
+  // }
+
+  const switchResult =
+    platformOs === "darwin"
+      ? switchInputMacToWindows(inputValue, exePath)
+      : switchInputWindowsToMac(inputValue, monitorId, exePath);
+  if (!switchResult.success) {
+    return {
+      status: "failure",
+      title: `Failed to switch to input ${inputValue} via ${exePath}`,
+      message: switchResult.message + " :: " + (switchResult.rawOutput || ""),
+    };
   }
-
-  const platform = detectPlatform();
-
-  if (platform.os === "darwin") {
-    return switchInputMacOS(inputValue);
-  }
-
-  if (platform.os === "win32") {
-    // TypeScript knows controlMyMonitorPath is defined here due to validatePrerequisites
-    return switchInputWindows(inputValue, controlMyMonitorPath!, monitorId);
-  }
-
-  return { success: false, message: "Unsupported platform." };
+  return GenericSuccess;
 }
 
 /**
  * Switch input on macOS using m1ddc.
  */
-function switchInputMacOS(inputValue: number): SwitchResult {
+function switchInputMacToWindows(
+  inputValue: number,
+  exePath: string,
+): SwitchResult {
   try {
-    const command = `m1ddc set input ${inputValue}`;
+    const quotedPath = `"${exePath}"`;
+    const command = `${quotedPath} set input ${inputValue}`;
     const output = execSync(command, EXEC_OPTIONS) as string;
 
     return {
@@ -89,10 +96,10 @@ function switchInputMacOS(inputValue: number): SwitchResult {
     if (errorMessage.includes("No displays found")) {
       return {
         success: false,
-        message: "No DDC/CI compatible displays found. Is the monitor connected and awake?",
+        message:
+          "No DDC/CI compatible displays found. Is the monitor connected and awake?",
       };
     }
-
     if (errorMessage.includes("DDC communication failed")) {
       return {
         success: false,
@@ -111,17 +118,19 @@ function switchInputMacOS(inputValue: number): SwitchResult {
 /**
  * Switch input on Windows using ControlMyMonitor.
  */
-function switchInputWindows(
+function switchInputWindowsToMac(
   inputValue: number,
+  monitorId: string,
   exePath: string,
-  monitorId: string
 ): SwitchResult {
   try {
     // Escape path for command line (handle spaces)
     const quotedPath = `"${exePath}"`;
     const command = `${quotedPath} /SetValue "${monitorId}" ${VCP_INPUT_SOURCE} ${inputValue}`;
-
-    const output = execSync(command, { ...EXEC_OPTIONS, shell: "cmd.exe" }) as string;
+    const output = execSync(command, {
+      ...EXEC_OPTIONS,
+      shell: "cmd.exe",
+    }) as string;
 
     return {
       success: true,
@@ -130,7 +139,6 @@ function switchInputWindows(
     };
   } catch (error) {
     const errorMessage = error instanceof Error ? error.message : String(error);
-
     return {
       success: false,
       message: `ControlMyMonitor error: ${errorMessage}`,
@@ -144,40 +152,41 @@ function switchInputWindows(
  * Useful for determining correct input codes for your specific monitor.
  */
 export function discoverInputs(
-  controlMyMonitorPath?: string,
-  monitorId: string = "Primary"
+  platformOs: SupportedPlatform,
+  monitorId: string,
+  exePath: string,
 ): InputDiscovery {
-  const prereqError = validatePrerequisites(controlMyMonitorPath);
-  if (prereqError) {
-    return { success: false, error: prereqError };
-  }
+  // const prereqError = validateHostPlatform(exePath);
+  // if (prereqError) {
+  //   return { success: false, error: prereqError };
+  // }
 
-  const platform = detectPlatform();
-
-  if (platform.os === "darwin") {
-    return discoverInputsMacOS();
-  }
-
-  if (platform.os === "win32") {
-    return discoverInputsWindows(controlMyMonitorPath!, monitorId);
-  }
-
-  return { success: false, error: "Unsupported platform." };
+  // const platform = detectPlatform();
+  return platformOs === "darwin"
+    ? discoverInputsMacOS(exePath)
+    : discoverInputsWindows(exePath, monitorId);
 }
 
 /**
  * Discover inputs on macOS using m1ddc.
  */
-function discoverInputsMacOS(): InputDiscovery {
+function discoverInputsMacOS(exePath: string): InputDiscovery {
   try {
     // Get current input value
-    const currentInput = execSync("m1ddc get input", EXEC_OPTIONS) as string;
+    const quotedPath = `"${exePath}"`;
+    const currentInput = execSync(
+      `${quotedPath} get input`,
+      EXEC_OPTIONS,
+    ) as string;
     const currentValue = parseInt(currentInput.trim(), 10);
 
     // Get display list for additional info
     let displayInfo = "";
     try {
-      displayInfo = execSync("m1ddc display list", EXEC_OPTIONS) as string;
+      displayInfo = execSync(
+        `${quotedPath} display list`,
+        EXEC_OPTIONS,
+      ) as string;
     } catch {
       displayInfo = "(Could not retrieve display list)";
     }
@@ -214,7 +223,10 @@ function discoverInputsMacOS(): InputDiscovery {
 /**
  * Discover inputs on Windows using ControlMyMonitor.
  */
-function discoverInputsWindows(exePath: string, monitorId: string): InputDiscovery {
+function discoverInputsWindows(
+  exePath: string,
+  monitorId: string,
+): InputDiscovery {
   try {
     const quotedPath = `"${exePath}"`;
 
@@ -229,7 +241,7 @@ function discoverInputsWindows(exePath: string, monitorId: string): InputDiscove
     try {
       const inputInfo = execSync(
         `${quotedPath} /GetValue "${monitorId}" ${VCP_INPUT_SOURCE}`,
-        { ...EXEC_OPTIONS, shell: "cmd.exe" }
+        { ...EXEC_OPTIONS, shell: "cmd.exe" },
       ) as string;
       currentValue = parseInt(inputInfo.trim(), 10);
       if (isNaN(currentValue)) currentValue = undefined;
@@ -240,9 +252,9 @@ function discoverInputsWindows(exePath: string, monitorId: string): InputDiscove
     const info = [
       "=== Windows DDC/CI Discovery (ControlMyMonitor) ===",
       "",
-      currentValue !== undefined
-        ? `Current Input Value (VCP 0x60): ${currentValue}`
-        : "Current Input Value: (Could not read)",
+      currentValue === undefined
+        ? "Current Input Value: (Could not read)"
+        : `Current Input Value (VCP 0x60): ${currentValue}`,
       "",
       "Common Input Values:",
       "  15 (0x0F) = DisplayPort",

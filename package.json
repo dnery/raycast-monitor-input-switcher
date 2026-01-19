@@ -5,11 +5,13 @@
   "description": "Switch monitor input source via DDC/CI commands",
   "icon": "extension-icon.png",
   "author": "danilo",
-  "categories": ["System"],
+  "categories": [
+    "System"
+  ],
   "license": "MIT",
   "preferences": [
     {
-      "name": "displayportValue",
+      "name": "displayPortValue",
       "title": "DisplayPort Input Code",
       "description": "DDC/CI input value for DisplayPort (VCP 0x60)",
       "type": "textfield",
@@ -27,15 +29,23 @@
     {
       "name": "controlMyMonitorPath",
       "title": "ControlMyMonitor Path (Windows)",
-      "description": "Full path to ControlMyMonitor.exe on Windows",
+      "description": "[Windows only] Full path to ControlMyMonitor.exe",
       "type": "textfield",
-      "default": "",
+      "default": "C:\\Tools\\ControlMyMonitor\\ControlMyMonitor.exe",
+      "required": false
+    },
+    {
+      "name": "m1ddcPath",
+      "title": "m1ddc Path (macOS)",
+      "description": "[macOS only] Full path to m1ddc CLI tool",
+      "type": "textfield",
+      "default": "/opt/homebrew/bin/m1ddc",
       "required": false
     },
     {
       "name": "monitorId",
-      "title": "Monitor Identifier",
-      "description": "Monitor ID for ControlMyMonitor (Windows). Use 'Primary' or specific ID from discovery.",
+      "title": "Monitor Identifier (Windows)",
+      "description": "[Windows only] Monitor ID for ControlMyMonitor. Use 'Primary' or specific ID from discovery.",
       "type": "textfield",
       "default": "Primary",
       "required": false
@@ -43,17 +53,10 @@
   ],
   "commands": [
     {
-      "name": "switch-to-displayport",
-      "title": "Switch to DisplayPort",
+      "name": "toggle-input-source",
+      "title": "Switch Input Source",
       "subtitle": "Monitor Input",
-      "description": "Switch monitor input to DisplayPort (typically: switch to Windows PC)",
-      "mode": "no-view"
-    },
-    {
-      "name": "switch-to-hdmi",
-      "title": "Switch to HDMI",
-      "subtitle": "Monitor Input",
-      "description": "Switch monitor input to HDMI (typically: switch to Mac)",
+      "description": "Switch monitor input HDMI 🔄 DisplayPort",
       "mode": "no-view"
     },
     {
@@ -61,11 +64,12 @@
       "title": "Discover Input Codes",
       "subtitle": "Monitor Input",
       "description": "Read current input value and list available DDC/CI information",
-      "mode": "detail"
+      "mode": "view"
     }
   ],
   "dependencies": {
-    "@raycast/api": "^1.83.0"
+    "@raycast/api": "^1.83.0",
+    "oxlint": "^1.16.0"
   },
   "devDependencies": {
     "@raycast/eslint-config": "^1.0.11",
@@ -80,6 +84,7 @@
     "dev": "ray develop",
     "fix-lint": "ray lint --fix",
     "lint": "ray lint",
+    "oxlint": "oxlint -c .oxlintrc.json --fix-suggestions",
     "prepublishOnly": "echo \"\\n\\nIt seems like you are trying to publish the Raycast extension to npm.\\n\\nIf you did intend to publish it to npm, remove the \\`prepublishOnly\\` script and rerun \\`npm publish\\` again.\\nIf you wanted to publish it to the Raycast Store instead, use \\`npm run publish\\` instead.\\n\\n\" && exit 1",
     "publish": "npx @raycast/api@latest publish"
   }

@@ -5,8 +5,8 @@
  */
 
 import { execSync } from "node:child_process";
-import { existsSync } from "node:fs";
 import { platform } from "node:os";
+import { ToastResult, GenericSuccess } from "./toast";
 
 /** Supported operating systems for this extension */
 export type SupportedPlatform = "darwin" | "win32";
@@ -16,10 +16,13 @@ export type AppleSiliconGen = "m1" | "m2_or_later" | "intel" | "unknown";
 
 export interface PlatformInfo {
   os: SupportedPlatform | "unsupported";
-  isAppleSilicon: boolean;
   appleChipGen: AppleSiliconGen;
+  isWin32: boolean;
+  isAppleSilicon: boolean;
   m1ddcSupportsBuiltinHdmi: boolean;
 }
+
+export type PlatformValidation = PlatformInfo & ToastResult;
 
 /**
  * Detect the current platform and Apple Silicon generation.
@@ -33,8 +36,9 @@ export function detectPlatform(): PlatformInfo {
   if (os === "win32") {
     return {
       os: "win32",
-      isAppleSilicon: false,
+      isWin32: true,
       appleChipGen: "unknown",
+      isAppleSilicon: false,
       m1ddcSupportsBuiltinHdmi: false,
     };
   }
@@ -43,8 +47,9 @@ export function detectPlatform(): PlatformInfo {
     const chipGen = detectAppleSiliconGeneration();
     return {
       os: "darwin",
-      isAppleSilicon: chipGen !== "intel",
+      isWin32: false,
       appleChipGen: chipGen,
+      isAppleSilicon: chipGen !== "intel",
       // M2+ supports built-in HDMI; M1 does not (per m1ddc docs)
       m1ddcSupportsBuiltinHdmi: chipGen === "m2_or_later",
     };
@@ -52,8 +57,9 @@ export function detectPlatform(): PlatformInfo {
 
   return {
     os: "unsupported",
-    isAppleSilicon: false,
+    isWin32: false,
     appleChipGen: "unknown",
+    isAppleSilicon: false,
     m1ddcSupportsBuiltinHdmi: false,
   };
 }
@@ -65,9 +71,11 @@ export function detectPlatform(): PlatformInfo {
  */
 function detectAppleSiliconGeneration(): AppleSiliconGen {
   try {
-    const brandString = execSync("sysctl -n machdep.cpu.brand_string", {
+    const quotedPath = `"/usr/sbin/sysctl"`;
+    const brandString = execSync(`${quotedPath} -n machdep.cpu.brand_string`, {
+      shell: "/bin/bash",
       encoding: "utf-8",
-      timeout: 5000,
+      timeout: 3000,
     }).trim();
 
     // Intel chips contain "Intel" in the brand string
@@ -94,77 +102,54 @@ function detectAppleSiliconGeneration(): AppleSiliconGen {
 }
 
 /**
- * Check if m1ddc CLI tool is available on macOS.
- *
- * m1ddc is typically installed via Homebrew: `brew install m1ddc`
- */
-export function isM1ddcInstalled(): boolean {
-  try {
-    execSync("which m1ddc", { encoding: "utf-8", timeout: 5000 });
-    return true;
-  } catch {
-    return false;
-  }
-}
-
-/**
- * Check if ControlMyMonitor.exe exists at the specified path (Windows).
- */
-export function isControlMyMonitorInstalled(path: string): boolean {
-  if (!path || path.trim() === "") {
-    return false;
-  }
-  return existsSync(path);
-}
-
-/**
  * Validate that all prerequisites are met for the current platform.
  *
  * Returns an error message if prerequisites are not met, or null if ready.
  */
-export function validatePrerequisites(controlMyMonitorPath?: string): string | null {
+export function validateHostPlatform(): PlatformValidation {
   const info = detectPlatform();
 
   if (info.os === "unsupported") {
-    return "This extension only supports macOS and Windows.";
+    return {
+      ...info,
+      status: "failure",
+      title: "This extension only supports macOS and Windows.",
+      message: "",
+    };
   }
 
   if (info.os === "darwin") {
     if (info.appleChipGen === "intel") {
-      return "m1ddc requires Apple Silicon (M1 or later). Intel Macs are not supported.";
-    }
-
-    if (!isM1ddcInstalled()) {
-      return "m1ddc is not installed. Install via: brew install m1ddc";
+      return {
+        ...info,
+        status: "failure",
+        title: "m1ddc requires Apple Silicon (M1 or later)",
+        message: "M1 is partially supported, Intel Macs are not supported.",
+      };
     }
 
     // Warn about M1 built-in HDMI limitation (non-blocking)
     if (info.appleChipGen === "m1") {
-      // This is a warning, not a blocker - external displays still work
-      console.warn(
-        "Note: m1ddc does not support M1's built-in HDMI port. " +
-          "External displays via USB-C/Thunderbolt adapters should work."
-      );
+      return {
+        ...info,
+        status: "soft-fail",
+        title: "m1ddc does not support M1's built-in HDMI port!",
+        message:
+          "External displays via USB-C/Thunderbolt adapters should work.",
+      };
     }
 
-    return null;
+    return { ...info, ...GenericSuccess };
   }
 
   if (info.os === "win32") {
-    if (!controlMyMonitorPath || controlMyMonitorPath.trim() === "") {
-      return (
-        "ControlMyMonitor path not configured. " +
-        "Download from https://www.nirsoft.net/utils/controlmymonitor.zip " +
-        "and set the path in extension preferences."
-      );
-    }
-
-    if (!isControlMyMonitorInstalled(controlMyMonitorPath)) {
-      return `ControlMyMonitor not found at: ${controlMyMonitorPath}`;
-    }
-
-    return null;
+    return { ...info, ...GenericSuccess };
   }
 
-  return "Unknown platform error.";
+  return {
+    ...info,
+    status: "failure",
+    title: "Unknown platform error.",
+    message: "",
+  };
 }

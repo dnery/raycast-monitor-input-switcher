@@ -5,53 +5,74 @@
  * Useful for determining correct input codes for your specific monitor.
  */
 
-import { Detail, getPreferenceValues } from "@raycast/api";
+import { Detail } from "@raycast/api";
 import { discoverInputs } from "./lib/ddc";
-import { detectPlatform } from "./lib/platform";
-
-interface Preferences {
-  displayportValue: string;
-  hdmiValue: string;
-  controlMyMonitorPath: string;
-  monitorId: string;
-}
+import { PrerequisiteValidation, validatePrerequisites } from "./common";
+import { SupportedPlatform } from "./lib/platform";
 
 export default function Command() {
-  const prefs = getPreferenceValues<Preferences>();
-  const platform = detectPlatform();
+  const platformValidation = validatePrerequisites();
 
   // Build platform info section
+  if (platformValidation.os === "unsupported") {
+    const markdown = "### Nothing could be retrieved!";
+    console.log(markdown);
+    return (
+      <Detail markdown={markdown} navigationTitle="# DDC/CI Input Discovery" />
+    );
+  }
   const platformInfo = [
+    "",
     "## Platform Information",
     "",
-    `- **OS**: ${platform.os}`,
-    platform.os === "darwin" ? `- **Apple Silicon**: ${platform.isAppleSilicon ? "Yes" : "No"}` : "",
-    platform.os === "darwin" ? `- **Chip Generation**: ${platform.appleChipGen}` : "",
-    platform.os === "darwin"
-      ? `- **Built-in HDMI Supported**: ${platform.m1ddcSupportsBuiltinHdmi ? "Yes (M2+)" : "No (M1 or Intel)"}`
+    `- **OS**: ${platformValidation.os}`,
+    platformValidation.os === "darwin"
+      ? `- **Apple Silicon**: ${platformValidation.isAppleSilicon ? "Yes" : "No"}`
+      : "",
+    platformValidation.os === "darwin"
+      ? `- **Chip Generation**: ${platformValidation.appleChipGen}`
+      : "",
+    platformValidation.os === "darwin"
+      ? `- **Built-in HDMI Supported**: ${platformValidation.m1ddcSupportsBuiltinHdmi ? "Yes (M2+)" : "No (M1 or Intel)"}`
+      : "",
+    "",
+  ].join("\n");
+
+  // Build current config section
+  if (!Object.hasOwn(platformValidation, "displayPortValue")) {
+    const markdown = `
+      ${platformInfo}
+      `;
+    console.log(markdown);
+    return (
+      <Detail markdown={markdown} navigationTitle="# DDC/CI Input Discovery" />
+    );
+  }
+  const completeValidation = platformValidation as PrerequisiteValidation;
+  const settingsInfo = [
+    "## Current Configuration",
+    "",
+    `- **DisplayPort Value**: ${completeValidation.displayPortValue}`,
+    `- **HDMI Value**: ${completeValidation.hdmiPortValue}`,
+    completeValidation.os === "win32"
+      ? `- **ControlMyMonitor Path**: ${completeValidation.controlMyMonitorPath || "(not set)"}`
+      : "",
+    completeValidation.os === "win32"
+      ? `- **Monitor ID**: ${completeValidation.monitorId || "Primary"}`
       : "",
     "",
   ]
     .filter(Boolean)
     .join("\n");
 
-  // Build current config section
-  const configInfo = [
-    "## Current Configuration",
-    "",
-    `- **DisplayPort Value**: ${prefs.displayportValue}`,
-    `- **HDMI Value**: ${prefs.hdmiValue}`,
-    platform.os === "win32" ? `- **ControlMyMonitor Path**: ${prefs.controlMyMonitorPath || "(not set)"}` : "",
-    platform.os === "win32" ? `- **Monitor ID**: ${prefs.monitorId || "Primary"}` : "",
-    "",
-  ]
-    .filter(Boolean)
-    .join("\n");
-
   // Attempt discovery
+  const exePath = completeValidation.isAppleSilicon
+    ? completeValidation.m1ddcPath
+    : completeValidation.controlMyMonitorPath;
   const discovery = discoverInputs(
-    prefs.controlMyMonitorPath || undefined,
-    prefs.monitorId || "Primary"
+    completeValidation.os as SupportedPlatform,
+    completeValidation.monitorId || "Primary",
+    exePath,
   );
 
   let discoverySection: string;
@@ -59,16 +80,10 @@ export default function Command() {
     discoverySection = [
       "## Discovery Results",
       "",
-      discovery.currentValue !== undefined
-        ? `**Current Input Value**: \`${discovery.currentValue}\``
-        : "",
-      "",
       "```",
       discovery.availableInfo || "(No additional information)",
       "```",
-    ]
-      .filter(Boolean)
-      .join("\n");
+    ].join("\n");
   } else {
     discoverySection = [
       "## Discovery Failed",
@@ -77,7 +92,7 @@ export default function Command() {
       "",
       "### Troubleshooting",
       "",
-      platform.os === "darwin"
+      completeValidation.os === "darwin"
         ? [
             "1. Ensure m1ddc is installed: `brew install m1ddc`",
             "2. Check the monitor is connected and awake",
@@ -102,25 +117,23 @@ export default function Command() {
     "1. **Switch to each input manually** using your monitor's OSD",
     "2. **Read the current value** from the active machine:",
     "",
-    platform.os === "darwin"
+    completeValidation.os === "darwin"
       ? "   ```bash\n   m1ddc get input\n   ```"
-      : '   ```powershell\n   .\\ControlMyMonitor.exe /GetValue Primary 60\n   ```',
+      : "   ```powershell\n   .\\ControlMyMonitor.exe /GetValue Primary 60\n   ```",
     "",
     "3. **Record the value** for each input (DP, HDMI1, HDMI2, etc.)",
     "4. **Update extension preferences** with your discovered values",
   ].join("\n");
 
   const markdown = [
+    "",
     "# DDC/CI Input Discovery",
+    `${platformInfo}`,
+    `${settingsInfo}`,
+    `${discoverySection}`,
     "",
-    platformInfo,
-    configInfo,
-    discoverySection,
     "",
-    "---",
-    "",
-    manualInstructions,
+    `${manualInstructions}`,
   ].join("\n");
-
   return <Detail markdown={markdown} />;
 }

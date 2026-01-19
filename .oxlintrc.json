@@ -1,0 +1,9 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "categories": {
+    "pedantic": "deny"
+  },
+  "rules": {
+    "eslint/max-lines-per-function": "allow"
+  }
+}
