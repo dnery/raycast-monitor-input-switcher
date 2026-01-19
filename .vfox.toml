@@ -1,0 +1,6 @@
+# vfox project manifest
+# Run: vfox install
+# Docs: https://vfox.lhan.me/
+
+[nodejs]
+version = "22.11.0"
