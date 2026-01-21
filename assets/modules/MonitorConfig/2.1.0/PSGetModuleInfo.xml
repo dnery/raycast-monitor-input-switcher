@@ -1,0 +1,151 @@
+<Objs Version="1.1.0.1" xmlns="http://schemas.microsoft.com/powershell/2004/04">
+  <Obj RefId="0">
+    <TN RefId="0">
+      <T>Microsoft.PowerShell.Commands.PSRepositoryItemInfo</T>
+      <T>System.Management.Automation.PSCustomObject</T>
+      <T>System.Object</T>
+    </TN>
+    <MS>
+      <S N="Name">MonitorConfig</S>
+      <S N="Version">2.1.0</S>
+      <S N="Type">Module</S>
+      <S N="Description">Manage brightness and other monitor settings with DDC/CI and WMI.</S>
+      <S N="Author">MartinGC94</S>
+      <S N="CompanyName">MartinGC94</S>
+      <S N="Copyright">(c) 2023 MartinGC94. All rights reserved.</S>
+      <DT N="PublishedDate">2025-10-12T14:01:52-03:00</DT>
+      <Nil N="InstalledDate" />
+      <Nil N="UpdatedDate" />
+      <Nil N="LicenseUri" />
+      <URI N="ProjectUri">https://github.com/MartinGC94/MonitorConfig</URI>
+      <Nil N="IconUri" />
+      <Obj N="Tags" RefId="1">
+        <TN RefId="1">
+          <T>System.Object[]</T>
+          <T>System.Array</T>
+          <T>System.Object</T>
+        </TN>
+        <LST>
+          <S>Display</S>
+          <S>Monitor</S>
+          <S>Settings</S>
+          <S>Options</S>
+          <S>Configuration</S>
+          <S>Config</S>
+          <S>DDC</S>
+          <S>DDC/CI</S>
+          <S>MCCS</S>
+          <S>Brightness</S>
+          <S>Contrast</S>
+          <S>PSModule</S>
+          <S>PSEdition_Core</S>
+          <S>PSEdition_Desktop</S>
+        </LST>
+      </Obj>
+      <Obj N="Includes" RefId="2">
+        <TN RefId="2">
+          <T>System.Collections.Hashtable</T>
+          <T>System.Object</T>
+        </TN>
+        <DCT>
+          <En>
+            <S N="Key">RoleCapability</S>
+            <Obj N="Value" RefId="3">
+              <TNRef RefId="1" />
+              <LST />
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Workflow</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Command</S>
+            <Obj N="Value" RefId="4">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Get-MonitorBrightness</S>
+                <S>Get-MonitorColorSettings</S>
+                <S>Get-Monitor</S>
+                <S>Get-MonitorDetails</S>
+                <S>Get-MonitorVCPResponse</S>
+                <S>Reset-MonitorSettings</S>
+                <S>Save-MonitorSettings</S>
+                <S>Set-MonitorBrightness</S>
+                <S>Set-MonitorColorSettings</S>
+                <S>Set-MonitorVCPValue</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">DscResource</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+          <En>
+            <S N="Key">Cmdlet</S>
+            <Obj N="Value" RefId="5">
+              <TNRef RefId="1" />
+              <LST>
+                <S>Get-MonitorBrightness</S>
+                <S>Get-MonitorColorSettings</S>
+                <S>Get-Monitor</S>
+                <S>Get-MonitorDetails</S>
+                <S>Get-MonitorVCPResponse</S>
+                <S>Reset-MonitorSettings</S>
+                <S>Save-MonitorSettings</S>
+                <S>Set-MonitorBrightness</S>
+                <S>Set-MonitorColorSettings</S>
+                <S>Set-MonitorVCPValue</S>
+              </LST>
+            </Obj>
+          </En>
+          <En>
+            <S N="Key">Function</S>
+            <Ref N="Value" RefId="3" />
+          </En>
+        </DCT>
+      </Obj>
+      <Nil N="PowerShellGetFormatVersion" />
+      <S N="ReleaseNotes">2.1.0:_x000D__x000A_    Updated the errors to be more descriptive when failing to fetch monitors._x000D__x000A_2.0:_x000D__x000A_    Added an argument transformer and argument completer to the "Monitor" parameter for all commands._x000D__x000A_        This allows users to specify the monitors with the device name like: Set-MonitorBrightness -Monitor \\.\DISPLAY1 -Value 10_x000D__x000A_    Added position 0 to the Monitor parameter for all commands with that parameter._x000D__x000A_        Other positional parameters have been bumped up by 1 as needed._x000D__x000A_    Added position 0 to the DeviceName parameter for the Get-Monitor command._x000D__x000A_1.0.3:_x000D__x000A_    Fix index out of bounds error for Get-Monitor when an attached monitor is disabled._x000D__x000A_1.0.2:_x000D__x000A_    Remove ValidateRange attributes from the Value and ALSBrightness parameters of Set-MonitorBrightness._x000D__x000A_    Don't throw when scanning for VCP features, unless the monitor handle is closed._x000D__x000A_1.0.1:_x000D__x000A_    Add positions for various parameters._x000D__x000A_1.0:_x000D__x000A_    Initial release.</S>
+      <Obj N="Dependencies" RefId="6">
+        <TNRef RefId="1" />
+        <LST />
+      </Obj>
+      <S N="RepositorySourceLocation">https://www.powershellgallery.com/api/v2</S>
+      <S N="Repository">PSGallery</S>
+      <S N="PackageManagementProvider">NuGet</S>
+      <Obj N="AdditionalMetadata" RefId="7">
+        <TN RefId="3">
+          <T>System.Management.Automation.PSCustomObject</T>
+          <T>System.Object</T>
+        </TN>
+        <MS>
+          <S N="copyright">(c) 2023 MartinGC94. All rights reserved.</S>
+          <S N="description">Manage brightness and other monitor settings with DDC/CI and WMI.</S>
+          <S N="requireLicenseAcceptance">False</S>
+          <S N="releaseNotes">2.1.0:_x000D__x000A_    Updated the errors to be more descriptive when failing to fetch monitors._x000D__x000A_2.0:_x000D__x000A_    Added an argument transformer and argument completer to the "Monitor" parameter for all commands._x000D__x000A_        This allows users to specify the monitors with the device name like: Set-MonitorBrightness -Monitor \\.\DISPLAY1 -Value 10_x000D__x000A_    Added position 0 to the Monitor parameter for all commands with that parameter._x000D__x000A_        Other positional parameters have been bumped up by 1 as needed._x000D__x000A_    Added position 0 to the DeviceName parameter for the Get-Monitor command._x000D__x000A_1.0.3:_x000D__x000A_    Fix index out of bounds error for Get-Monitor when an attached monitor is disabled._x000D__x000A_1.0.2:_x000D__x000A_    Remove ValidateRange attributes from the Value and ALSBrightness parameters of Set-MonitorBrightness._x000D__x000A_    Don't throw when scanning for VCP features, unless the monitor handle is closed._x000D__x000A_1.0.1:_x000D__x000A_    Add positions for various parameters._x000D__x000A_1.0:_x000D__x000A_    Initial release.</S>
+          <S N="isLatestVersion">True</S>
+          <S N="isAbsoluteLatestVersion">True</S>
+          <S N="versionDownloadCount">693</S>
+          <S N="downloadCount">13149</S>
+          <S N="packageSize">42282</S>
+          <S N="published">12-Oct-25 14:01:52 -03:00</S>
+          <S N="created">12-Oct-25 14:01:52 -03:00</S>
+          <S N="lastUpdated">20-Jan-26 09:50:00 -03:00</S>
+          <S N="tags">Display Monitor Settings Options Configuration Config DDC DDC/CI MCCS Brightness Contrast PSModule PSEdition_Core PSEdition_Desktop PSCmdlet_Get-MonitorBrightness PSCommand_Get-MonitorBrightness PSCmdlet_Get-MonitorColorSettings PSCommand_Get-MonitorColorSettings PSCmdlet_Get-Monitor PSCommand_Get-Monitor PSCmdlet_Get-MonitorDetails PSCommand_Get-MonitorDetails PSCmdlet_Get-MonitorVCPResponse PSCommand_Get-MonitorVCPResponse PSCmdlet_Reset-MonitorSettings PSCommand_Reset-MonitorSettings PSCmdlet_Save-MonitorSettings PSCommand_Save-MonitorSettings PSCmdlet_Set-MonitorBrightness PSCommand_Set-MonitorBrightness PSCmdlet_Set-MonitorColorSettings PSCommand_Set-MonitorColorSettings PSCmdlet_Set-MonitorVCPValue PSCommand_Set-MonitorVCPValue PSIncludes_Cmdlet</S>
+          <S N="developmentDependency">False</S>
+          <S N="updated">2026-01-20T09:50:00Z</S>
+          <S N="NormalizedVersion">2.1.0</S>
+          <S N="Authors">MartinGC94</S>
+          <S N="IsPrerelease">false</S>
+          <S N="ItemType">Module</S>
+          <S N="FileList">MonitorConfig.nuspec|MonitorConfig.deps.json|MonitorConfig.dll|MonitorConfig.psd1|MonitorConfigFormat.ps1xml|en-US\MonitorConfig.dll-Help.xml</S>
+          <S N="GUID">552fa35c-0b32-42f6-858a-64d5ed0b05e6</S>
+          <S N="PowerShellVersion">5.1</S>
+          <S N="CompanyName">Unknown</S>
+        </MS>
+      </Obj>
+      <S N="InstalledLocation">C:\Users\Danilo\Projects\raycast-monitor-input-switcher\assets\modules\MonitorConfig\2.1.0</S>
+    </MS>
+  </Obj>
+</Objs>

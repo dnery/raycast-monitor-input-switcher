@@ -1,0 +1,1702 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<helpItems schema="maml" xmlns="http://msh">
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-Monitor</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>Monitor</command:noun>
+      <maml:description>
+        <maml:para>Gets active physical monitors for use with other commands in this module.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>This command gets physical monitors that are currently active members of the Windows desktop.
+Depending on the exact monitor, it will be returned as either a VCPMonitor or a WMIMonitor object (typically internal laptop displays). WMIMonitors have limited support (only support reading and setting display brightness).
+VCPMonitors can generally do anything that this module offers, though the monitor itself may lack hardware support for certain features.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-Monitor</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
+          <maml:name>DeviceName</maml:name>
+          <maml:description>
+            <maml:para>Specifies the Windows device name used for the logical display to find the associated physical displays. The names look like: "\.\DISPLAYX" where X is a number, starting from 1.
+Note that the numbers are not the same as the Windows display settings menu shows.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+          <dev:type>
+            <maml:name>String[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>SkipWmiCheck</maml:name>
+          <maml:description>
+            <maml:para>Skips checking if the found monitors are controlled by WMI rather than DDC/CI.
+Useful if you know the monitors can't be controlled with WMI and want a faster monitor lookup call, or if a monitor supports both WMI and DDC for management.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-Monitor</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Primary</maml:name>
+          <maml:description>
+            <maml:para>Specifies that the command should return the physical monitors associated with the primary display.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>SkipWmiCheck</maml:name>
+          <maml:description>
+            <maml:para>Skips checking if the found monitors are controlled by WMI rather than DDC/CI.
+Useful if you know the monitors can't be controlled with WMI and want a faster monitor lookup call, or if a monitor supports both WMI and DDC for management.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="true" pipelineInput="False" position="named" aliases="none">
+        <maml:name>DeviceName</maml:name>
+        <maml:description>
+          <maml:para>Specifies the Windows device name used for the logical display to find the associated physical displays. The names look like: "\.\DISPLAYX" where X is a number, starting from 1.
+Note that the numbers are not the same as the Windows display settings menu shows.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">String[]</command:parameterValue>
+        <dev:type>
+          <maml:name>String[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Primary</maml:name>
+        <maml:description>
+          <maml:para>Specifies that the command should return the physical monitors associated with the primary display.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>SkipWmiCheck</maml:name>
+        <maml:description>
+          <maml:para>Skips checking if the found monitors are controlled by WMI rather than DDC/CI.
+Useful if you know the monitors can't be controlled with WMI and want a faster monitor lookup call, or if a monitor supports both WMI and DDC for management.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>None</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.WMI.WMIMonitor</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>Returned if the monitor can be controlled through WMI. (Typically internal laptop displays)</maml:para>
+        </maml:description>
+      </command:returnValue>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.VCP.VCPMonitor</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>Returned if the monitor cannot be controlled through WMI. DDC/CI support is not guaranteed.</maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor -Primary | Set-MonitorBrightness -Value 20</dev:code>
+        <dev:remarks>
+          <maml:para>Gets the primary monitor and sets the brightness to 20.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-MonitorBrightness</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>MonitorBrightness</command:noun>
+      <maml:description>
+        <maml:para>Returns brightness details (Min, Max and current value) for the specified monitor.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns brightness details (Min, Max and current value) for the specified monitor.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-MonitorBrightness</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor(s) to return brightness details for.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Monitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Monitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>Monitor</maml:name>
+        <maml:description>
+          <maml:para>The monitor(s) to return brightness details for.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Monitor[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Monitor[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.Monitor[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.BrightnessInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor | Get-MonitorBrightness</dev:code>
+        <dev:remarks>
+          <maml:para>Returns brightness information for all connected monitors.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-MonitorColorSettings</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>MonitorColorSettings</command:noun>
+      <maml:description>
+        <maml:para>Returns color and contrast information about the specified display(s).</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns color and contrast information about the specified display(s).</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-MonitorColorSettings</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor(s) to return color details for.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>VCPMonitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>Monitor</maml:name>
+        <maml:description>
+          <maml:para>The monitor(s) to return color details for.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+        <dev:type>
+          <maml:name>VCPMonitor[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.VCP.VCPMonitor[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.MonitorColorInfo</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor | Get-MonitorColorSettings</dev:code>
+        <dev:remarks>
+          <maml:para>Returns color information for all connected monitors.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-MonitorDetails</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>MonitorDetails</command:noun>
+      <maml:description>
+        <maml:para>Returns details of the specified monitor(s) like DDC capabilities, firmware version, usage time, etc.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Returns details of the specified monitor(s) like DDC capabilities, firmware version, usage time, etc. The DDC capabilities are based off the monitor capability string, which some manufacturers unfortunately don't always fill out correctly.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-MonitorDetails</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor(s) to return details for.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>VCPMonitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>Monitor</maml:name>
+        <maml:description>
+          <maml:para>The monitor(s) to return details for.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+        <dev:type>
+          <maml:name>VCPMonitor[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.VCP.VCPMonitor[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.MonitorDetails</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor | Get-MonitorDetails</dev:code>
+        <dev:remarks>
+          <maml:para>Returns various details about all of the connected monitors.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Get-MonitorVCPResponse</command:name>
+      <command:verb>Get</command:verb>
+      <command:noun>MonitorVCPResponse</command:noun>
+      <maml:description>
+        <maml:para>Query the specified monitors for the specified VCP codes.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>This command lets you query the specified monitors for the current value and max possible value for a specified VCP code.
+Alternatively, you can query the monitor for all supported codes with the -All parameter.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Get-MonitorVCPResponse</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>All</maml:name>
+          <maml:description>
+            <maml:para>Queries the monitor for all possible VCP codes from 0-255 and returns the ones that are supported, along with their value.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor(s) to return VCP code details for.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>VCPMonitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Get-MonitorVCPResponse</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor(s) to return VCP code details for.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>VCPMonitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>VCPCode</maml:name>
+          <maml:description>
+            <maml:para>The VCP codes (0-255) to query.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Byte[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Byte[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>All</maml:name>
+        <maml:description>
+          <maml:para>Queries the monitor for all possible VCP codes from 0-255 and returns the ones that are supported, along with their value.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>Monitor</maml:name>
+        <maml:description>
+          <maml:para>The monitor(s) to return VCP code details for.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+        <dev:type>
+          <maml:name>VCPMonitor[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>VCPCode</maml:name>
+        <maml:description>
+          <maml:para>The VCP codes (0-255) to query.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Byte[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Byte[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.VCP.VCPMonitor[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.VCP.VCPFeatureResponse</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor -DeviceName \\.\DISPLAY1 | Get-MonitorVCPResponse -All</dev:code>
+        <dev:remarks>
+          <maml:para>Returns all supported VCP codes by for display1.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Reset-MonitorSettings</command:name>
+      <command:verb>Reset</command:verb>
+      <command:noun>MonitorSettings</command:noun>
+      <maml:description>
+        <maml:para>Resets various monitor settings to their factory defaults.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Resets various monitor settings to their factory defaults.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Reset-MonitorSettings</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Kind</maml:name>
+          <maml:description>
+            <maml:para>The settings that should be reset.</maml:para>
+          </maml:description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">All</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">BrightnessAndContrast</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Geometry</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">Colors</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">TVDefaults</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">ResetKind</command:parameterValue>
+          <dev:type>
+            <maml:name>ResetKind</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+          <maml:name>Confirm</maml:name>
+          <maml:description>
+            <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor(s) to reset settings on.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>VCPMonitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+          <maml:name>WhatIf</maml:name>
+          <maml:description>
+            <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="cf">
+        <maml:name>Confirm</maml:name>
+        <maml:description>
+          <maml:para>Prompts you for confirmation before running the cmdlet.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>Kind</maml:name>
+        <maml:description>
+          <maml:para>The settings that should be reset.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">ResetKind</command:parameterValue>
+        <dev:type>
+          <maml:name>ResetKind</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>Monitor</maml:name>
+        <maml:description>
+          <maml:para>The monitor(s) to reset settings on.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+        <dev:type>
+          <maml:name>VCPMonitor[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="wi">
+        <maml:name>WhatIf</maml:name>
+        <maml:description>
+          <maml:para>Shows what would happen if the cmdlet runs. The cmdlet is not run.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.VCP.VCPMonitor[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor -DeviceName \\.\DISPLAY1 | Reset-MonitorSettings -Kind Colors</dev:code>
+        <dev:remarks>
+          <maml:para>Resets all color settings for Display1.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Save-MonitorSettings</command:name>
+      <command:verb>Save</command:verb>
+      <command:noun>MonitorSettings</command:noun>
+      <maml:description>
+        <maml:para>Issues a command to save the current display settings on the specified monitor.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Issues a command to save the current display settings on the specified monitor.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Save-MonitorSettings</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor(s) where the modified settings should be saved.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>VCPMonitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>Monitor</maml:name>
+        <maml:description>
+          <maml:para>The monitor(s) where the modified settings should be saved.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+        <dev:type>
+          <maml:name>VCPMonitor[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.VCP.VCPMonitor[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor | Save-MonitorSettings</dev:code>
+        <dev:remarks>
+          <maml:para>Save the current settings for all connected monitors.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Set-MonitorBrightness</command:name>
+      <command:verb>Set</command:verb>
+      <command:noun>MonitorBrightness</command:noun>
+      <maml:description>
+        <maml:para>Sets the monitor brightness on the specified monitors.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Sets the monitor brightness on the specified monitors.
+Also allows adjustment of various dynamic brightness settings for WMI displays.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-MonitorBrightness</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Value</maml:name>
+          <maml:description>
+            <maml:para>The brightness value to set.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ALSBrightness</maml:name>
+          <maml:description>
+            <maml:para>Set the ambient light sensor brightness value.
+If brightness has been manually adjusted, the brightness policy has to be reverted by using the RevertToPolicy parameter.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Byte</command:parameterValue>
+          <dev:type>
+            <maml:name>Byte</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ALSEnabled</maml:name>
+          <maml:description>
+            <maml:para>Controls whether or not brightness should be adjusted by the Ambient Light Sensor. If brightness has been manually adjusted, the brightness policy has to be reverted by using the RevertToPolicy parameter.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+          <dev:type>
+            <maml:name>Boolean</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor to adjust brightness settings for.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Monitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Monitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>RevertToPolicy</maml:name>
+          <maml:description>
+            <maml:para>Reverts the brightness policy to system managed if manual brightness values have previously been used.</maml:para>
+          </maml:description>
+          <dev:type>
+            <maml:name>SwitchParameter</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>False</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Timeout</maml:name>
+          <maml:description>
+            <maml:para>Sets the timeout for changing the brightness on WMIMonitors. It's rarely needed.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+      <command:syntaxItem>
+        <maml:name>Set-MonitorBrightness</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>Value</maml:name>
+          <maml:description>
+            <maml:para>The brightness value to set.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor to adjust brightness settings for.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Monitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>Monitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ALSBrightness</maml:name>
+        <maml:description>
+          <maml:para>Set the ambient light sensor brightness value.
+If brightness has been manually adjusted, the brightness policy has to be reverted by using the RevertToPolicy parameter.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Byte</command:parameterValue>
+        <dev:type>
+          <maml:name>Byte</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ALSEnabled</maml:name>
+        <maml:description>
+          <maml:para>Controls whether or not brightness should be adjusted by the Ambient Light Sensor. If brightness has been manually adjusted, the brightness policy has to be reverted by using the RevertToPolicy parameter.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Boolean</command:parameterValue>
+        <dev:type>
+          <maml:name>Boolean</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>Monitor</maml:name>
+        <maml:description>
+          <maml:para>The monitor to adjust brightness settings for.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Monitor[]</command:parameterValue>
+        <dev:type>
+          <maml:name>Monitor[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>RevertToPolicy</maml:name>
+        <maml:description>
+          <maml:para>Reverts the brightness policy to system managed if manual brightness values have previously been used.</maml:para>
+        </maml:description>
+        <command:parameterValue required="false" variableLength="false">SwitchParameter</command:parameterValue>
+        <dev:type>
+          <maml:name>SwitchParameter</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>False</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Timeout</maml:name>
+        <maml:description>
+          <maml:para>Sets the timeout for changing the brightness on WMIMonitors. It's rarely needed.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>Value</maml:name>
+        <maml:description>
+          <maml:para>The brightness value to set.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.Monitor[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor | Set-MonitorBrightness -Value 100</dev:code>
+        <dev:remarks>
+          <maml:para>Sets the brightness value to 100 on all active monitors.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Set-MonitorColorSettings</command:name>
+      <command:verb>Set</command:verb>
+      <command:noun>MonitorColorSettings</command:noun>
+      <maml:description>
+        <maml:para>Allows adjustment of various color related settings on the specified monitors.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Allows adjustment of various color related settings on the specified monitors.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-MonitorColorSettings</maml:name>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>BlueDrive</maml:name>
+          <maml:description>
+            <maml:para>Adjusts the "drive" AKA "black" level for the blue color.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>BlueGain</maml:name>
+          <maml:description>
+            <maml:para>Adjusts the "gain" AKA "tint" level for the blue color.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>BlueSaturation</maml:name>
+          <maml:description>
+            <maml:para>Adjusts how saturated the blue color should be.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ColorSaturation</maml:name>
+          <maml:description>
+            <maml:para>Adjusts how saturated the overall image should be.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>ColorTemperature</maml:name>
+          <maml:description>
+            <maml:para>Changes the color temperature on the display.</maml:para>
+          </maml:description>
+          <command:parameterValueGroup>
+            <command:parameterValue required="false" command:variableLength="false">_None</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">_4000k</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">_5000k</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">_6500k</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">_7500k</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">_8200k</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">_9300k</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">_10000k</command:parameterValue>
+            <command:parameterValue required="false" command:variableLength="false">_11500k</command:parameterValue>
+          </command:parameterValueGroup>
+          <command:parameterValue required="true" variableLength="false">VCPMonitorColorTemperature</command:parameterValue>
+          <dev:type>
+            <maml:name>VCPMonitorColorTemperature</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Contrast</maml:name>
+          <maml:description>
+            <maml:para>Adjusts the contrast level on the display.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>CyanSaturation</maml:name>
+          <maml:description>
+            <maml:para>Adjusts how saturated the cyan color should be.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>Gamma</maml:name>
+          <maml:description>
+            <maml:para>Adjusts the gamma level on the display.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>GreenDrive</maml:name>
+          <maml:description>
+            <maml:para>Adjusts the "drive" AKA "black" level for the green color.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>GreenGain</maml:name>
+          <maml:description>
+            <maml:para>Adjusts the "gain" AKA "tint" level for the green color.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>GreenSaturation</maml:name>
+          <maml:description>
+            <maml:para>Adjusts how saturated the green color should be.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>MagentaSaturation</maml:name>
+          <maml:description>
+            <maml:para>Adjusts how saturated the magenta color should be.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor(s) to get color info from.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>VCPMonitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>RedDrive</maml:name>
+          <maml:description>
+            <maml:para>Adjusts the "drive" AKA "black" level for the red color.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>RedGain</maml:name>
+          <maml:description>
+            <maml:para>Adjusts the "gain" AKA "tint" level for the red color.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>RedSaturation</maml:name>
+          <maml:description>
+            <maml:para>Adjusts how saturated the red color should be.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>YellowSaturation</maml:name>
+          <maml:description>
+            <maml:para>Adjusts how saturated the yellow color should be.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>GrayScaleBlackExpansion</maml:name>
+          <maml:description>
+            <maml:para>Expands the gray scale in the near black region, making darks appear more light or gray.
+Values between 0-3 can be used.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+          <maml:name>GrayScaleWhiteExpansion</maml:name>
+          <maml:description>
+            <maml:para>Expands the gray scale in the near white region, making whites appear more dark or gray.
+Values between 0-3 can be used.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>BlueDrive</maml:name>
+        <maml:description>
+          <maml:para>Adjusts the "drive" AKA "black" level for the blue color.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>BlueGain</maml:name>
+        <maml:description>
+          <maml:para>Adjusts the "gain" AKA "tint" level for the blue color.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>BlueSaturation</maml:name>
+        <maml:description>
+          <maml:para>Adjusts how saturated the blue color should be.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ColorSaturation</maml:name>
+        <maml:description>
+          <maml:para>Adjusts how saturated the overall image should be.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>ColorTemperature</maml:name>
+        <maml:description>
+          <maml:para>Changes the color temperature on the display.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">VCPMonitorColorTemperature</command:parameterValue>
+        <dev:type>
+          <maml:name>VCPMonitorColorTemperature</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Contrast</maml:name>
+        <maml:description>
+          <maml:para>Adjusts the contrast level on the display.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>CyanSaturation</maml:name>
+        <maml:description>
+          <maml:para>Adjusts how saturated the cyan color should be.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>Gamma</maml:name>
+        <maml:description>
+          <maml:para>Adjusts the gamma level on the display.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>GreenDrive</maml:name>
+        <maml:description>
+          <maml:para>Adjusts the "drive" AKA "black" level for the green color.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>GreenGain</maml:name>
+        <maml:description>
+          <maml:para>Adjusts the "gain" AKA "tint" level for the green color.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>GreenSaturation</maml:name>
+        <maml:description>
+          <maml:para>Adjusts how saturated the green color should be.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>MagentaSaturation</maml:name>
+        <maml:description>
+          <maml:para>Adjusts how saturated the magenta color should be.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>Monitor</maml:name>
+        <maml:description>
+          <maml:para>The monitor(s) to get color info from.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+        <dev:type>
+          <maml:name>VCPMonitor[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>RedDrive</maml:name>
+        <maml:description>
+          <maml:para>Adjusts the "drive" AKA "black" level for the red color.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>RedGain</maml:name>
+        <maml:description>
+          <maml:para>Adjusts the "gain" AKA "tint" level for the red color.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>RedSaturation</maml:name>
+        <maml:description>
+          <maml:para>Adjusts how saturated the red color should be.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>YellowSaturation</maml:name>
+        <maml:description>
+          <maml:para>Adjusts how saturated the yellow color should be.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>GrayScaleBlackExpansion</maml:name>
+        <maml:description>
+          <maml:para>Expands the gray scale in the near black region, making darks appear more light or gray.
+Values between 0-3 can be used.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="false" variableLength="true" globbing="false" pipelineInput="False" position="named" aliases="none">
+        <maml:name>GrayScaleWhiteExpansion</maml:name>
+        <maml:description>
+          <maml:para>Expands the gray scale in the near white region, making whites appear more dark or gray.
+Values between 0-3 can be used.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.VCP.VCPMonitor[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor -Primary | Set-MonitorColorSettings -ColorSaturation 40 -RedGain 95</dev:code>
+        <dev:remarks>
+          <maml:para>Adjusts the overall color saturation and gain for the red color on the primary display.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+  <command:command xmlns:maml="http://schemas.microsoft.com/maml/2004/10" xmlns:command="http://schemas.microsoft.com/maml/dev/command/2004/10" xmlns:dev="http://schemas.microsoft.com/maml/dev/2004/10" xmlns:MSHelp="http://msdn.microsoft.com/mshelp">
+    <command:details>
+      <command:name>Set-MonitorVCPValue</command:name>
+      <command:verb>Set</command:verb>
+      <command:noun>MonitorVCPValue</command:noun>
+      <maml:description>
+        <maml:para>Adjusts the value of the specified VCP code with the specified value.</maml:para>
+      </maml:description>
+    </command:details>
+    <maml:description>
+      <maml:para>Adjusts the value of the specified VCP code with the specified value.
+This can be used to adjust any of the settings that the monitor supports, rather than the high level wrappers included in the module.</maml:para>
+    </maml:description>
+    <command:syntax>
+      <command:syntaxItem>
+        <maml:name>Set-MonitorVCPValue</maml:name>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+          <maml:name>VCPCode</maml:name>
+          <maml:description>
+            <maml:para>The VCP code to adjust. You can get a list of the supported VCP codes on the monitor with `Get-MonitorVCPResponse -All`.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">Byte</command:parameterValue>
+          <dev:type>
+            <maml:name>Byte</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+          <maml:name>Value</maml:name>
+          <maml:description>
+            <maml:para>The value to set. Read the DDC/CI documentation to find out what the value means for your specific VCP code. Alternatively, you can experiment with different values and note down the results.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+          <dev:type>
+            <maml:name>UInt32</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+        <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+          <maml:name>Monitor</maml:name>
+          <maml:description>
+            <maml:para>The monitor(s) where the VCP code + value should be set.</maml:para>
+          </maml:description>
+          <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+          <dev:type>
+            <maml:name>VCPMonitor[]</maml:name>
+            <maml:uri />
+          </dev:type>
+          <dev:defaultValue>None</dev:defaultValue>
+        </command:parameter>
+      </command:syntaxItem>
+    </command:syntax>
+    <command:parameters>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="True (ByValue)" position="named" aliases="none">
+        <maml:name>Monitor</maml:name>
+        <maml:description>
+          <maml:para>The monitor(s) where the VCP code + value should be set.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">VCPMonitor[]</command:parameterValue>
+        <dev:type>
+          <maml:name>VCPMonitor[]</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="0" aliases="none">
+        <maml:name>VCPCode</maml:name>
+        <maml:description>
+          <maml:para>The VCP code to adjust. You can get a list of the supported VCP codes on the monitor with `Get-MonitorVCPResponse -All`.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">Byte</command:parameterValue>
+        <dev:type>
+          <maml:name>Byte</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+      <command:parameter required="true" variableLength="true" globbing="false" pipelineInput="False" position="1" aliases="none">
+        <maml:name>Value</maml:name>
+        <maml:description>
+          <maml:para>The value to set. Read the DDC/CI documentation to find out what the value means for your specific VCP code. Alternatively, you can experiment with different values and note down the results.</maml:para>
+        </maml:description>
+        <command:parameterValue required="true" variableLength="false">UInt32</command:parameterValue>
+        <dev:type>
+          <maml:name>UInt32</maml:name>
+          <maml:uri />
+        </dev:type>
+        <dev:defaultValue>None</dev:defaultValue>
+      </command:parameter>
+    </command:parameters>
+    <command:inputTypes>
+      <command:inputType>
+        <dev:type>
+          <maml:name>MartinGC94.MonitorConfig.API.VCP.VCPMonitor[]</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:inputType>
+    </command:inputTypes>
+    <command:returnValues>
+      <command:returnValue>
+        <dev:type>
+          <maml:name>System.Object</maml:name>
+        </dev:type>
+        <maml:description>
+          <maml:para>
+          </maml:para>
+        </maml:description>
+      </command:returnValue>
+    </command:returnValues>
+    <maml:alertSet>
+      <maml:alert>
+        <maml:para>
+        </maml:para>
+      </maml:alert>
+    </maml:alertSet>
+    <command:examples>
+      <command:example>
+        <maml:title>-------------------------- Example 1 --------------------------</maml:title>
+        <dev:code>PS C:\&gt; Get-Monitor -DeviceName \\.\DISPLAY3 | Set-MonitorVCPValue -VCPCode 0x60 -Value 3</dev:code>
+        <dev:remarks>
+          <maml:para>Sets the VCP code 0x60 (Input select) to 3 on display3.</maml:para>
+          <maml:para />
+          <maml:para />
+        </dev:remarks>
+      </command:example>
+    </command:examples>
+    <command:relatedLinks />
+  </command:command>
+</helpItems>
